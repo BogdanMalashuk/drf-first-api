@@ -1,24 +1,28 @@
-from django.contrib.auth.models import Group, User
-from rest_framework import permissions, viewsets
-
-from tutorial.quickstart.serializers import GroupSerializer, UserSerializer
-
+from rest_framework import generics
 from api.models import Book
 from api.serializers import BookSerializer
 
 
-class UserViewSet(viewsets.ModelViewSet):
-    queryset = User.objects.all().order_by('-date_joined')
-    serializer_class = UserSerializer
-    # permission_classes = [permissions.IsAuthenticated]
+class BookListView(generics.ListAPIView):
+    queryset = Book.objects.all()
+    serializer_class = BookSerializer
 
 
-class GroupViewSet(viewsets.ModelViewSet):
-    queryset = Group.objects.all().order_by('name')
-    serializer_class = GroupSerializer
-    # permission_classes = [permissions.IsAuthenticated]  # права
+class BookDetailView(generics.RetrieveAPIView):
+    queryset = Book.objects.all()
+    serializer_class = BookSerializer
 
 
-class BookViewSet(viewsets.ModelViewSet):
+class BookCreateView(generics.CreateAPIView):
+    queryset = Book.objects.all()
+    serializer_class = BookSerializer
+
+
+class BookDeleteView(generics.DestroyAPIView):
+    queryset = Book.objects.all()
+    serializer_class = BookSerializer
+
+
+class BookUpdateView(generics.UpdateAPIView):
     queryset = Book.objects.all()
     serializer_class = BookSerializer
